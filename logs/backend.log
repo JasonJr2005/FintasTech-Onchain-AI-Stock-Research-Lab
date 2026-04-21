@@ -1,0 +1,47 @@
+
+============================================================
+FintasTech Research API — v0.3.0
+EDUCATIONAL / RESEARCH USE ONLY. NOT INVESTMENT ADVICE.
+This server serves rule-based research signals and paper-trading
+simulation data only. It does not and cannot execute real trades.
+============================================================
+
+INFO:     Started server process [59081]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:63128 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63144 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63143 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63150 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63151 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63152 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63153 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63166 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63167 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63168 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63169 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63157 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63156 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63173 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63172 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63455 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63464 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63465 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63466 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63467 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63470 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63471 - "GET /v1/analyze/AAPL?risk_tolerance=moderate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63560 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63561 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63562 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63563 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63568 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63569 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63570 - "GET /v1/simulation/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63571 - "GET /v1/presets HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59081]

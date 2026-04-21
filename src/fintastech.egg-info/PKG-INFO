@@ -1,0 +1,263 @@
+Metadata-Version: 2.4
+Name: fintastech
+Version: 0.3.0
+Summary: Open-source educational framework for rule-based multi-agent stock research and on-chain paper-trading simulation. NOT investment advice.
+License: MIT
+Keywords: fintech,research,paper-trading,backtesting,multi-agent,blockchain,solidity,defi-sandbox,education,quant-finance
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: fastapi>=0.115.0
+Requires-Dist: uvicorn[standard]>=0.32.0
+Requires-Dist: pydantic>=2.9.0
+Requires-Dist: pydantic-settings>=2.6.0
+Requires-Dist: httpx>=0.27.0
+Requires-Dist: numpy>=2.0.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: yfinance>=0.2.40
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.24.0; extra == "dev"
+Requires-Dist: ruff>=0.8.0; extra == "dev"
+
+# FintasTech — Research Lab
+
+> **Open-source educational framework for rule-based multi-agent stock
+> research + on-chain paper-trading simulation.**
+>
+> **FOR EDUCATION AND RESEARCH USE ONLY. NOT INVESTMENT ADVICE.**
+> No real orders. No real funds. Mock-only on-chain assets. See
+> [`DISCLAIMER.md`](./DISCLAIMER.md).
+
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Status](https://img.shields.io/badge/status-educational-orange.svg)](./DISCLAIMER.md)
+[![Solidity](https://img.shields.io/badge/solidity-0.8.24-363636.svg)](./blockchain)
+[![Python](https://img.shields.io/badge/python-3.11%2B-3776AB.svg)](./pyproject.toml)
+[![Next.js](https://img.shields.io/badge/next.js-15-000000.svg)](./frontend)
+
+---
+
+## 🧭 What is it?
+
+FintasTech is three things wired together:
+
+1. **Multi-agent research framework** — 14 rule-based "master investor"
+   heuristics + 4 core analyst modules (technical / fundamental / valuation /
+   sentiment) score any ticker on the US, HK, or A-share markets using live
+   public market data (Yahoo Finance).
+2. **Paper-trading sandbox** — a persistent simulated portfolio that runs the
+   research pipeline automatically, records every virtual trade, and shows
+   you what the strategy *would have done* had you run it live. No broker
+   integration exists.
+3. **On-chain verifiable research registry** — every model verdict is mirrored
+   to an `append-only` Solidity contract so that, after the fact, anyone can
+   audit "what did the model say about AAPL on day X?". The vault contract
+   (`FintasVault`) is a paper-trading research vault that only accepts a mock
+   stablecoin (mUSDC).
+
+All three pieces share the same rule-based pipeline — same signals
+everywhere, consistent behaviour.
+
+```
+                 ┌──────────────────── public market data (yfinance) ────────────────────┐
+                 ▼                                                                        ▼
+        ┌─────────────────┐   bullish/bearish/neutral + conf.   ┌────────────────────────────┐
+        │  14 master rules │◄──────────────────────────────────►│  4 core analyst modules    │
+        │  (Buffett, …)    │                                     │  (tech / fund / val / sen) │
+        └────────┬─────────┘                                     └────────────┬───────────────┘
+                 │                                                            │
+                 └────────── blended illustrative weight ─────────────────────┘
+                                              │
+           ┌──────────────────────────────────┼──────────────────────────────────┐
+           ▼                                  ▼                                  ▼
+  ┌──────────────────┐             ┌──────────────────────┐             ┌────────────────────┐
+  │  Paper-trading   │             │  Historical backtest │             │  Oracle bridge     │
+  │  ledger          │             │  engine              │             │  → FintasVault     │
+  │  (JSON, local)   │             │  (walk-forward)      │             │  → SignalRegistry  │
+  └──────────────────┘             └──────────────────────┘             └────────────────────┘
+           ▲                                  ▲                                  ▲
+           └────────────────── Next.js dApp (Research Lab UI) ───────────────────┘
+```
+
+Everything is built to be **verifiable on a developer's laptop** — clone,
+install, run, and you can watch the system make a virtual portfolio
+decision and record it on a local Ethereum node.
+
+---
+
+## 🛡️ Compliance by construction
+
+This project ships five mechanical safeguards so the code cannot be turned
+into a real-money system by accident:
+
+1. **Vault-level mock-asset guard.** `FintasVault` reverts with
+   `AssetNotMarkedAsMock` unless the underlying ERC20 symbol starts with a
+   lowercase `m` (e.g. `mUSDC`). Real USDC/DAI/USDT cannot be used without
+   editing the contract.
+2. **Deployment network allow-list.** Deploy and oracle scripts refuse any
+   chain other than Hardhat (31337) and Sepolia (11155111).
+3. **Frontend chain allow-list.** The dApp rejects wallet connections on
+   mainnet/BSC/Polygon/Arbitrum/Optimism/Base.
+4. **No broker / DEX integration.** The `execution/` package is paper-trading
+   only. There is no code path that can route an order to a real market.
+5. **On-chain educational notice.** `FintasVault` emits an
+   `EducationalUseOnly` event at construction, immutably marking the
+   contract's intent on chain.
+
+See [`DISCLAIMER.md`](./DISCLAIMER.md) for full legal text.
+
+---
+
+## ✨ Features
+
+- **Live global coverage** — US, HK (`0700.HK`), A-share (`600519.SS`,
+  `000001.SZ`) via `yfinance`.
+- **Multi-agent research** — 18 analyst modules running in parallel per
+  symbol, each emitting an explainable verdict.
+- **Walk-forward backtest** — historical paper-trading to sanity-check the
+  blend; returns NAV curve, total/annualized return, max drawdown, Sharpe.
+- **Persistent paper-trading ledger** — `data/simulation.json` keeps track
+  of virtual cash, virtual positions, and every virtual trade.
+- **Automated research loop** — one command (`scripts/auto_research_loop.py`)
+  runs the whole stack periodically, so you can cron it.
+- **Smart contracts with real security** — `AccessControl` roles, `ReentrancyGuard`,
+  `Pausable`, custom errors, oracle rate-limit + delta-cap, circuit breaker,
+  emergency 1:1 withdraw.
+- **Production-grade tests** — 26+ Hardhat tests covering happy path, edge
+  cases, and all revert conditions.
+- **Modern dApp UI** — Next.js 15 + Tailwind + ethers v6 + MetaMask, with
+  chainId guard and a global educational disclaimer.
+
+---
+
+## 🚀 Quickstart — 5 minutes, from `git clone` to your first simulated trade
+
+You need: Node.js 18+, Python 3.11+, a MetaMask browser extension.
+
+```bash
+# 1. Backend (Python / FastAPI)
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
+uvicorn fintastech.api.main:app --reload --port 8000   # keep running
+
+# 2. Frontend (Next.js 15)
+cd frontend
+npm install
+npm run dev                                            # keep running → http://localhost:3000
+
+# 3. Blockchain (Hardhat + Solidity 0.8.24)
+cd ../blockchain
+npm install
+npm run node            # starts local Ethereum node (chainId 31337)
+# In another terminal:
+npm run deploy:local    # deploys MockUSDC + FintasSignalRegistry + FintasVault
+npm test                # 26 passing tests
+
+# 4. Drive the on-chain demo
+npx hardhat run scripts/e2e-demo.js --network localhost
+
+# 5. Automated research loop (paper-trading)
+python scripts/auto_research_loop.py --once \
+    --symbols AAPL,MSFT,GOOGL,TSLA,NVDA
+```
+
+Then open http://localhost:3000 and explore:
+- `/` **研究概览** — today's signals on your watch-list
+- `/analysis?symbol=AAPL` — drill into a single ticker, see all 18 analyst
+  voices
+- `/simulation` **模拟盘** — virtual portfolio driven by the research model
+- `/backtest` — run a historical paper-trading backtest
+- `/vault` — connect MetaMask (Hardhat 31337), deposit mUSDC, watch NAV
+  move with the oracle bridge
+
+---
+
+## 🗺️ Repository layout
+
+```
+FintasTech/
+├── DISCLAIMER.md               # ★ Legal / educational posture
+├── README.md
+├── pyproject.toml              # Python package metadata
+├── requirements.txt
+│
+├── src/fintastech/             # 🐍 Research backend (FastAPI)
+│   ├── agents/                 #   18 analyst modules
+│   │   ├── masters.py          #   Buffett, Munger, Graham, Lynch, …
+│   │   ├── technical.py        #   RSI / MACD / MA / Bollinger
+│   │   ├── fundamental.py      #   P/E, ROE, margin, growth, debt
+│   │   ├── valuation.py        #   DCF, earnings yield, relative value
+│   │   ├── sentiment.py        #   Momentum & volatility proxy
+│   │   └── advisor.py          #   ResearchOrchestrator (blends all)
+│   ├── simulation/portfolio.py #   ★ Paper-trading ledger
+│   ├── backtesting/engine.py   #   Walk-forward backtest
+│   ├── data/yahoo_provider.py  #   Live public market data
+│   ├── api/                    #   FastAPI routes
+│   └── models/                 #   Pydantic schemas
+│
+├── blockchain/                 # ⛓ Smart contracts
+│   ├── contracts/
+│   │   ├── FintasVault.sol             # ★ Paper-trading vault (mock-only)
+│   │   ├── FintasSignalRegistry.sol    # ★ Immutable research-signal log
+│   │   └── MockUSDC.sol                # Test asset w/ faucet
+│   ├── test/                           # 26 tests (happy + edge + reverts)
+│   └── scripts/
+│       ├── deploy.js                   # allow-listed chains only
+│       ├── seed-demo.js
+│       ├── e2e-demo.js                 # 6-step end-to-end demo
+│       └── oracle-bridge.js            # backend → chain
+│
+├── frontend/                   # 🎨 Next.js dApp
+│   └── src/app/
+│       ├── simulation/         # ★ Paper-trading UI
+│       ├── vault/              # ★ On-chain vault (MetaMask)
+│       ├── analysis/, backtest/
+│       └── …
+│
+└── scripts/
+    └── auto_research_loop.py   # ★ One-command automated research
+```
+
+---
+
+## 🧪 Testing & verification
+
+```bash
+# Python
+pytest
+ruff check .
+
+# Smart contracts
+cd blockchain && npm test && npm run coverage
+
+# End-to-end demo (deploy + seed + deposit + oracle tick + withdraw)
+npx hardhat run scripts/e2e-demo.js --network localhost
+
+# Frontend type-check
+cd frontend && npx tsc --noEmit
+```
+
+---
+
+## 🎓 Use as an academic / coursework project
+
+FintasTech cleanly maps to common blockchain / fintech coursework rubrics:
+
+| Criterion                    | How this project scores                                                            |
+| :--------------------------- | :--------------------------------------------------------------------------------- |
+| **Innovation & originality** | Multi-agent explainable research signals as an on-chain audit primitive.           |
+| **Smart-contract functionality** | ERC20 shares, oracle feed, circuit breaker, guardian, emergency withdraw.     |
+| **Code quality & security**  | Roles + ReentrancyGuard + Pausable + custom errors + rate/delta limits + 26 tests. |
+| **Interaction & usability**  | Full Next.js dApp + Hardhat scripts + live paper-trading dashboard + e2e demo.     |
+
+See [`COURSE_PROJECT.md`](./COURSE_PROJECT.md) for a ready-to-submit write-up.
+
+---
+
+## 📄 License
+
+MIT — see [`LICENSE`](./LICENSE).
+
+Use of the code is at your own risk. If you fork this project and remove
+the safeguards described above in order to handle real value, you are
+operating **outside the authors' intent** and accept all legal and
+financial responsibility. See [`DISCLAIMER.md`](./DISCLAIMER.md).
