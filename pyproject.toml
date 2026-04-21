@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fintastech"
+version = "0.3.0"
+description = "Open-source educational framework for rule-based multi-agent stock research and on-chain paper-trading simulation. NOT investment advice."
+readme = "README.md"
+license = { text = "MIT" }
+keywords = [
+    "fintech", "research", "paper-trading", "backtesting",
+    "multi-agent", "blockchain", "solidity", "defi-sandbox",
+    "education", "quant-finance",
+]
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.6.0",
+    "httpx>=0.27.0",
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "yfinance>=0.2.40",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.8.0",
+]
+
+[project.scripts]
+fintastech-api = "fintastech.api.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

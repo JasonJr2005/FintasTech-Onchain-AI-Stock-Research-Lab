@@ -1,0 +1,13 @@
+{
+  "initial_capital": 100000.0,
+  "cash": 100000.0,
+  "holdings": {},
+  "trades": [],
+  "equity_curve": [
+    {
+      "ts": "2026-04-18T09:14:32.879529+00:00",
+      "value": 100000.0
+    }
+  ],
+  "last_rebalance_at": null
+}

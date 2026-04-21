@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/*  FintasTech — design tokens                                        */
+/*  Inspired by Linear, Stripe, Kraken, Revolut                       */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --bg: #07070c;
+  --bg-elev: #0c0c14;
+  --bg-card: #111118;
+  --bg-hover: #16161f;
+
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.10);
+
+  --fg: #f5f5f7;
+  --fg-muted: #a1a1ab;
+  --fg-dim: #64646f;
+
+  --accent: #a78bfa;          /* violet-400 */
+  --accent-strong: #8b5cf6;   /* violet-500 */
+  --accent-deep: #7c3aed;     /* violet-600 */
+  --accent-glow: rgba(139, 92, 246, 0.35);
+
+  --gain: #34d399;
+  --loss: #f87171;
+  --warn: #fbbf24;
+}
+
+html {
+  color-scheme: dark;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-feature-settings: "ss01", "cv11";
+  font-family: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Noto Sans SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Layered radial grain on the page background */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(1200px 500px at 15% -10%, rgba(139, 92, 246, 0.10), transparent 60%),
+    radial-gradient(800px 400px at 110% 30%, rgba(79, 70, 229, 0.07), transparent 60%),
+    radial-gradient(800px 400px at 50% 120%, rgba(56, 189, 248, 0.04), transparent 60%);
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                         */
+/* ------------------------------------------------------------------ */
+
+@layer utilities {
+  .surface {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 8px 32px -12px rgba(0, 0, 0, 0.65);
+  }
+
+  .surface-hover {
+    transition: background 160ms ease, border-color 160ms ease,
+      transform 160ms ease;
+  }
+  .surface-hover:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+  }
+
+  /* Backwards-compat with older pages still using glass-card */
+  .glass-card {
+    @apply surface;
+  }
+  .glass-card-hover {
+    @apply surface surface-hover cursor-pointer;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow:
+      0 0 0 1px var(--accent-glow),
+      0 12px 32px -12px var(--accent-glow);
+    transition: transform 120ms ease, box-shadow 160ms ease, filter 160ms ease;
+  }
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+  }
+  .btn-primary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    color: var(--fg);
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+  }
+
+  .btn-danger {
+    @apply btn-ghost;
+    color: #fca5a5;
+    border-color: rgba(248, 113, 113, 0.25);
+  }
+  .btn-danger:hover:not(:disabled) {
+    color: #fecaca;
+    background: rgba(248, 113, 113, 0.08);
+    border-color: rgba(248, 113, 113, 0.5);
+  }
+
+  .input-base {
+    width: 100%;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.875rem;
+    color: var(--fg);
+    outline: none;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+  }
+  .input-base::placeholder {
+    color: var(--fg-dim);
+  }
+  .input-base:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+  }
+
+  .chip-bullish {
+    background: rgba(52, 211, 153, 0.08);
+    color: #86efac;
+    border-color: rgba(52, 211, 153, 0.22);
+  }
+  .chip-bearish {
+    background: rgba(248, 113, 113, 0.08);
+    color: #fda4af;
+    border-color: rgba(248, 113, 113, 0.22);
+  }
+  .chip-neutral {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--fg-muted);
+    border-color: var(--border);
+  }
+
+  .text-gain { color: var(--gain); }
+  .text-loss { color: var(--loss); }
+  .text-muted { color: var(--fg-muted); }
+  .text-dim { color: var(--fg-dim); }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Keyframes */
+  @keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .animate-pulse-soft { animation: pulseSoft 2s ease-in-out infinite; }
+
+  @keyframes shimmer {
+    from { background-position: -200px 0; }
+    to   { background-position: calc(200px + 100%) 0; }
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.03) 0%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.03) 100%
+    );
+    background-size: 200px 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
