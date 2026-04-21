@@ -22,7 +22,7 @@
 
 ## 🇬🇧 English
 
-### Vision — what this project actually teaches
+### Vision
 
 FintasTech answers a question most "AI trading" repos never ask out loud:
 
@@ -171,7 +171,7 @@ Every cycle (default 15 min) the oracle snapshots prices, computes the actual ca
 
 ## 🇨🇳 中文
 
-### 项目价值 — 它到底让人学到什么
+### 项目价值
 
 多数开源「AI trading」项目回避的核心问题是：
 
@@ -189,7 +189,6 @@ FintasTech 的答案有三层，每一层都有明确的现实意义：
 
 项目的价值不是「又一个交易机器人」，而是**把金融工程、量化研究与 Web3 缝在一起的一个完整可跑的 demo**——带有足够的打磨（中英双语、一键启动、实时数据），任何人打开 5 分钟内就能**看到**这些想法在跑起来。
 
-这对想向导师 / HR 证明自己「三栖能力」的人来说，有意义的不是单一技术点，而是：**你能把一件牵涉三个陌生领域的事，系统地做出来、讲清楚、让别人 5 分钟上手。**
 
 ### 功能巡览
 
