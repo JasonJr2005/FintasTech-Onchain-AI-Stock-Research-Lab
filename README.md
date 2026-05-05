@@ -42,12 +42,12 @@ The value isn't "yet another trading bot." It's a **working demonstration of fin
 
 ### Feature tour
 
-- `**/` Overview** — one-click presets (US mega-caps, HK tech, A-share liquor…) that immediately spin up a virtual portfolio.
-- `**/simulation` Paper trade** — live virtual portfolio, per-bar research re-runs, manual buys/sells in a sandbox.
-- `**/analysis` Single-stock research** — 18 analysts voting in parallel, fused directional signal, per-analyst reasoning, risk gauge.
-- `**/backtest` Strategy backtest** — historical walk-forward replay with equity curve, Sharpe, max-drawdown.
-- `**/vault` On-chain vault** — MetaMask connect, built-in mUSDC faucet, deposit/withdraw, **"Let AI analyse and anchor on-chain"** button, allocation table with live on-chain provenance.
-- `**/settings`** — risk preference (conservative / moderate / aggressive) propagated app-wide.
+- **/Overview** — one-click presets (US mega-caps, HK tech, A-share liquor…) that immediately spin up a virtual portfolio.
+- **/simulation Paper trade** — live virtual portfolio, per-bar research re-runs, manual buys/sells in a sandbox.
+- **/analysis Single-stock research** — 18 analysts voting in parallel, fused directional signal, per-analyst reasoning, risk gauge.
+- **/backtest Strategy backtest** — historical walk-forward replay with equity curve, Sharpe, max-drawdown.
+- **/vault On-chain vault** — MetaMask connect, built-in mUSDC faucet, deposit/withdraw, **"Let AI analyse and anchor on-chain"** button, allocation table with live on-chain provenance.
+- **/settings** — risk preference (conservative / moderate / aggressive) propagated app-wide.
 - **Top-bar language switch** — full Chinese / English UI, zero i18n dependency.
 
 ### What's technically non-trivial
@@ -192,12 +192,12 @@ FintasTech 的答案有三层，每一层都有明确的现实意义：
 
 ### 功能巡览
 
-- `**/` 概览** — 一键运行预设研究组合（美股巨头 / 港股科技 / A 股白酒 …），即刻生成一份虚拟组合。
-- `**/simulation` 模拟盘** — 实时虚拟组合，按 bar 重跑研究，支持手动买卖。
-- `**/analysis` 个股研究** — 18 位分析师并行打分 + 综合方向 + 每位分析师的推理 + 风险雷达。
-- `**/backtest` 策略回测** — 历史滚动向前回放，权益曲线、夏普、最大回撤。
-- `**/vault` 链上金库** — MetaMask 连接、内置 mUSDC 水龙头、存取款、**「让 AI 分析并上链」** 按钮、带链上溯源的分配表。
-- `**/settings`** — 风险偏好（保守 / 稳健 / 进取）全站同步。
+- **/ 概览** — 一键运行预设研究组合（美股巨头 / 港股科技 / A 股白酒 …），即刻生成一份虚拟组合。
+- **/simulation 模拟盘** — 实时虚拟组合，按 bar 重跑研究，支持手动买卖。
+- **/analysis 个股研究** — 18 位分析师并行打分 + 综合方向 + 每位分析师的推理 + 风险雷达。
+- **/backtest 策略回测** — 历史滚动向前回放，权益曲线、夏普、最大回撤。
+- **/vault 链上金库** — MetaMask 连接、内置 mUSDC 水龙头、存取款、**「让 AI 分析并上链」** 按钮、带链上溯源的分配表。
+- **/settings** — 风险偏好（保守 / 稳健 / 进取）全站同步。
 - **顶栏语言切换** — 中英 UI 完整覆盖，零 i18n 依赖。
 
 ### 技术上不轻松的点
